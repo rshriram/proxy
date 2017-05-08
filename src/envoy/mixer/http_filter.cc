@@ -17,12 +17,15 @@
 #include "common/common/logger.h"
 #include "common/http/headers.h"
 #include "common/http/utility.h"
+#include "common/tracing/zipkin_tracer_impl.h"
 #include "envoy/server/instance.h"
 #include "envoy/ssl/connection.h"
+#include "envoy/tracing/http_tracer.h"
 #include "server/config/network/http_connection_manager.h"
 #include "src/envoy/mixer/config.h"
 #include "src/envoy/mixer/http_control.h"
 #include "src/envoy/mixer/utils.h"
+
 
 using ::google::protobuf::util::Status;
 using StatusCode = ::google::protobuf::util::error::Code;
@@ -223,6 +226,7 @@ class Instance : public Http::StreamDecoderFilter,
     initiating_call_ = false;
 
     if (state_ == Complete) {
+      updateSpan();
       return FilterHeadersStatus::Continue;
     }
     Log().debug("Called Mixer::Instance : {} Stop", __func__);
@@ -280,7 +284,20 @@ class Instance : public Http::StreamDecoderFilter,
 
     state_ = Complete;
     if (!initiating_call_) {
+      updateSpan();
       decoder_callbacks_->continueDecoding();
+    }
+  }
+
+  // After the check call, obtain the service name from the Mixer's
+  // response and update all the Zipkin annotations with the service
+  // name corresponding to the source ip.
+  void updateSpan() const {
+    Tracing::Span& activeSpan = decoder_callbacks_->activeSpan();
+    if (Tracing::ZipkinSpan *zipkinSpan = dynamic_cast<Tracing::ZipkinSpan*>(&activeSpan)) {
+      Zipkin::Span& span = zipkinSpan->span();
+      span.setSourceService(); //need source service name.
+      span.setDestinationService(); //need destination service name.
     }
   }
 
