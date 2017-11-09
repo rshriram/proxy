@@ -1,4 +1,6 @@
 # Istio Proxy
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frshriram%2Fproxy.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frshriram%2Fproxy?ref=badge_shield)
+
 
 The Istio Proxy is a microservice proxy that can be used on the client and server side, and forms a microservice mesh. The Proxy supports a large number of features.
 
@@ -26,3 +28,7 @@ Please see [istio.io](https://istio.io)
 to learn about the overall Istio project and how to get in touch with us. To learn how you can
 contribute to any of the Istio components, including the proxy, please 
 see the Istio [contribution guidelines](https://github.com/istio/istio/blob/master/CONTRIBUTING.md).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frshriram%2Fproxy.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frshriram%2Fproxy?ref=badge_large)
