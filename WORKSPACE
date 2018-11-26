@@ -30,13 +30,13 @@ bind(
 )
 
 # When updating envoy sha manually please update the sha in istio.deps file also
-ENVOY_SHA = "48b161ee02f4ca77b8c26959c4058456ad3f197f"
-ENVOY_SHA256 = "ae044661f49db58cfb79fa65f1213a2e07758e3fac1e3e4088fd9edafa8e590d"
+ENVOY_SHA = "a644a2b7cbb6cd5f89e047fc42a42c996a184134"
+ENVOY_SHA256 = "4048265d0d457897f69278792b73ef0599d757e4799bfc582f0d90bc76520913"
 
 http_archive(
     name = "envoy",
     strip_prefix = "envoy-" + ENVOY_SHA,
-    url = "https://github.com/envoyproxy/envoy/archive/" + ENVOY_SHA + ".zip",
+    url = "https://github.com/rshriram/envoy/archive/" + ENVOY_SHA + ".zip",
     sha256 = ENVOY_SHA256,
 )
 
